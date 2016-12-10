@@ -5,17 +5,19 @@
 window.onload = function () {
     var canvas = document.getElementById("canvas"),
         context = canvas.getContext('2d'),
-        ball = new Ball(100, 50, 20);
+        ball = new Ball(100, 0, 20);
     var gravity = 0.2,
-        bounce = -0.5;
+        bounce = -0.6;
     var lines = [];
-    lines[0] = new Line(0, 100, 200, 20);
-    lines[1] = new Line(600, 200, 200, 160);
-    lines[2] = new Line(100, 300, 250, 10);
-    lines[3] = new Line(700, 400, 300, 170);
+    lines[0] = new Line(100, 100, 250, 8);
+    lines[1] = new Line(400, 200, 250, -10);
+    lines[2] = new Line(100, 220, 250, 12);
+    lines[3] = new Line(400, 350, 300, -8);
     lines[4] = new Line(120, 500, 300, 5);
+    lines[5] = new Line(500, 650, 250, -4);
 
     function drawLine(line) {
+        checkLine(line);
         line.draw(context);
     }
 
@@ -23,14 +25,34 @@ window.onload = function () {
         ball.draw(context);
     }
 
-    function drawFrame() {
-        window.requestAnimationFrame(drawFrame, canvas);
-        context.clearRect(0, 0, canvas.width, canvas.height);
+    function checkLine(line) {
+        var bounds = line.getBounds();
+        if (ball.x + ball.radius > bounds.x && ball.x - ball.radius < bounds.x + bounds.width
+            && ball.y + ball.radius > bounds.y && ball.y - ball.radius < bounds.y + bounds.height) {
+            var sin = Math.sin(line.rotation),
+                cos = Math.cos(line.rotation),
+                x1 = ball.x - line.x1,
+                y1 = ball.y - line.y1,
+                y_r = cos * y1 - sin * x1,
+                vy_r = cos * ball.vy - sin * ball.vx;
+            console.log(y_r);
+            if (y_r > -ball.radius && y_r < vy_r) {
+                console.log('Change');
+                var x2 = cos * x1 + sin * y1,
+                    vx_r = cos * ball.vx + sin * ball.vy;
+                y_r = -ball.radius;
+                vy_r *= bounce;
+                x1 = cos * x2 - sin * y_r;
+                y1 = cos * y_r + sin * x2;
+                ball.vx = cos * vx_r - sin * vy_r;
+                ball.vy = cos * vy_r + sin * vx_r;
+                ball.x = line.x1 + x1;
+                ball.y = line.y1 + y1;
+            }
+        }
+    }
 
-        ball.vy += gravity;
-        ball.x += ball.vx;
-        ball.y += ball.vy;
-
+    function checkBorder() {
         if (ball.x + ball.radius > canvas.width) {
             ball.x = canvas.width - ball.radius;
             ball.vx *= bounce;
@@ -46,6 +68,17 @@ window.onload = function () {
             ball.y = ball.radius;
             ball.vy *= bounce;
         }
+    }
+
+    function drawFrame() {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        ball.vy += gravity;
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+
+        checkBorder();
         lines.forEach(drawLine);
         drawBall(ball);
     }

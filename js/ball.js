@@ -9,8 +9,8 @@ function Ball(x, y, radius, color) {
     if (color == undefined) {
         color = "#ff0000";
     }
-    this.x = 0;
-    this.y = 0;
+    this.x = x;
+    this.y = y;
     this.radius = radius;
     this.vx = 0;
     this.vy = 0;
