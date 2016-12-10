@@ -9,12 +9,12 @@ window.onload = function () {
     var gravity = 0.2,
         bounce = -0.6;
     var lines = [];
-    lines[0] = new Line(100, 100, 250, 8);
-    lines[1] = new Line(400, 200, 250, -10);
-    lines[2] = new Line(100, 220, 250, 12);
-    lines[3] = new Line(400, 350, 300, -20);
+    lines[0] = new Line(100, 200, 250, 8);
+    lines[1] = new Line(400, 300, 250, -10);
+    lines[2] = new Line(100, 320, 250, 12);
+    lines[3] = new Line(400, 450, 300, -20);
     lines[4] = new Line(120, 500, 300, 6);
-    lines[5] = new Line(500, 650, 250, -4);
+    lines[5] = new Line(500, 680, 250, -4);
 
     function drawLine(line) {
         checkLine(line);
