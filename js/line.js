@@ -25,3 +25,18 @@ Line.prototype.draw = function (context) {
     context.stroke();
     context.restore();
 };
+
+Line.prototype.getBounds = function () {
+    var cos = Math.cos(this.rotation),
+        sin = Math.sin(this.rotation),
+        x1r = cos * this.x1 + sin * this.y1,
+        x2r = cos * this.x2 + sin * this.y2,
+        y1r = cos * this.y1 + sin * this.x1,
+        y2r = cos * this.y2 + sin * this.x2;
+    return {
+        x: Math.min(x1r, x2r),
+        y: Math.min(y1r, y2r),
+        width: Math.max(x1r, x2r) - Math.min(x1r, x2r),
+        height: Math.max(y1r, y2r) - Math.min(y1r, y2r)
+    }
+};

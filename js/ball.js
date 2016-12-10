@@ -2,7 +2,7 @@
  * Created by irmo on 16/12/10.
  */
 
-function Ball(radius, color) {
+function Ball(x, y, radius, color) {
     if (radius == undefined) {
         radius = 50;
     }
