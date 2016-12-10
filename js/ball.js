@@ -2,12 +2,9 @@
  * Created by irmo on 16/12/10.
  */
 
-function Ball(x, y, radius, color) {
+function Ball(x, y, radius) {
     if (radius == undefined) {
-        radius = 50;
-    }
-    if (color == undefined) {
-        color = "#ff0000";
+        radius = 20;
     }
     this.x = x;
     this.y = y;
@@ -15,14 +12,14 @@ function Ball(x, y, radius, color) {
     this.vx = 0;
     this.vy = 0;
     this.rotation = 0;
-    this.color = utils.parseColor(color);
 }
 
 Ball.prototype.draw = function (context) {
+
     context.save();
     context.translate(this.x, this.y);
     context.rotate(this.rotation);
-    context.fillStyle = this.color;
+    context.fillStyle = "#FF0000";
 
     context.beginPath();
     context.arc(0, 0, this.radius, 0, 2 * Math.PI, true);

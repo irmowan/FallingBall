@@ -12,8 +12,8 @@ window.onload = function () {
     lines[0] = new Line(100, 100, 250, 8);
     lines[1] = new Line(400, 200, 250, -10);
     lines[2] = new Line(100, 220, 250, 12);
-    lines[3] = new Line(400, 350, 300, -8);
-    lines[4] = new Line(120, 500, 300, 5);
+    lines[3] = new Line(400, 350, 300, -20);
+    lines[4] = new Line(120, 500, 300, 6);
     lines[5] = new Line(500, 650, 250, -4);
 
     function drawLine(line) {
